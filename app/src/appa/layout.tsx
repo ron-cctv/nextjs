@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono , Comforter} from "next/font/google";
 import { AntdRegistry } from '@ant-design/nextjs-registry';   /* 导入antd的App Router */
-import "./globals.css";  /* 导入全局css */
+/*  import "./globals.css";  导入全局css,这个在根layout中已经导入这里不重复 */
+import Link from "next/link";
 
 
 const comforter = Comforter({
@@ -26,16 +27,30 @@ export const metadata: Metadata = {
 };
 
 
-export default function RootLayout({
+export default function AppaLayout({
   children,
+  team,
+  analytics,
 }: Readonly<{
   children: React.ReactNode;
+  team: React.ReactNode;
+  analytics: React.ReactNode;
 }>) {
   return (
     <html lang="en">
       <body className={`${comforter.variable} ${geistSans.variable} ${geistMono.variable} antialiased`} >  
-      <AntdRegistry>  
-        {children}
+      <AntdRegistry> 
+        <div className="container mx-auto">
+           <div className="flex justify-center text-blue-500 p-6 gap-6">
+              <Link href='/'>Home</Link>
+              <Link href='../src/appa/visitors'>Visitors</Link>
+           </div>
+           <div className="flex gap-6">
+             {team}
+             {analytics}
+           </div>
+          {children}
+        </div>
       </AntdRegistry>
       </body>
     </html>
